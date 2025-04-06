@@ -1,0 +1,49 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/viewProduct">Available Items</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Pricing</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+           role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Admin Privileges
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" routerLink="/addProduct">Add product</a></li>
+          <li><a class="dropdown-item" routerLink="#">Another action</a></li>
+          <li><a class="dropdown-item" routerLink="#">Something else here</a></li>
+        </ul>
+      </li>
+    </ul>
+    <!-- Right side cart icon -->
+
+    <ul class="navbar-nav ms-auto">
+      <li  class="nav-item me-5">
+        <span class="navbar-text">
+          <i class="pi pi-shopping-cart" style="color: black; font-size: 1.2rem;"></i>
+        </span>
+      </li>
+      <li  class="nav-item me-5">
+        <div class="profile-pic">
+          <img
+            routerLink="/account"
+            alt="Profile"
+            class="rounded-circle"
+            style="width: 40px; height: 40px; border-radius: 50%;"
+            [src]="profilepic">
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
