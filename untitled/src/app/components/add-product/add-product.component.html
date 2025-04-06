@@ -1,0 +1,113 @@
+<div class="body">
+
+
+    @if (loading){
+      <div *ngIf="loading" class="loading-overlay">
+        <div class="loading-container">
+          <h1>Please wait ...</h1>
+          <p-progress-spinner ariaLabel="loading"></p-progress-spinner>
+        </div>
+      </div>
+    } @else {
+      <div class="form-container">
+      <h1>Add Products</h1>
+      <form [formGroup]="productForm" (ngSubmit)="addProductData()">
+
+        <div class="form-group">
+          <label>Product Name:</label>
+          <input type="text" formControlName="productName">
+          <div *ngIf="productForm.get('productName')?.touched && productForm.get('productName')?.invalid">
+            <small class="error">Product name is required.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Quantity:</label>
+          <input type="number" formControlName="quantity">
+          <div *ngIf="productForm.get('quantity')?.touched && productForm.get('quantity')?.errors">
+            <small class="error" *ngIf="productForm.get('quantity')?.errors?.['required']">Quantity is required.</small>
+            <small class="error" *ngIf="productForm.get('quantity')?.errors?.['min']">Minimum quantity is 1.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Price:</label>
+          <input type="number" formControlName="price">
+          <div *ngIf="productForm.get('price')?.touched && productForm.get('price')?.errors">
+            <small class="error" *ngIf="productForm.get('price')?.errors?.['required']">Quantity is required.</small>
+            <small class="error" *ngIf="productForm.get('price')?.errors?.['min']">Minimum quantity is 1.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Description:</label>
+<!--          <input type="text" formControlName="description">-->
+          <textarea id="w3review" name="w3review" rows="4" cols="75" formControlName="description"></textarea>
+          <div *ngIf="productForm.get('description')?.touched && productForm.get('description')?.invalid">
+            <small class="error">description name is required.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Image Upload:</label>
+          <input type="file" (change)="onFileChange($event)">
+          <div *ngIf="productForm.get('image')?.touched && productForm.get('image')?.invalid">
+            <small class="error">image is required.</small>
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <label>Product Type:</label>
+          <div class="radio-group">
+            <input type="radio" value="Electronics" name="productType" (change)="onProductTypeChange($event)" formControlName="productType">
+            <label>Electronics</label>
+            <input type="radio" value="Clothings" name="productType" (change)="onProductTypeChange($event)" formControlName="productType">
+            <label>Clothings</label>
+            <div *ngIf="productForm.get('productType')?.touched && productForm.get('productType')?.invalid">
+              <small class="error">product type name is required.</small>
+            </div>
+          </div>
+        </div>
+
+        @if (categoryId == 1){
+          <div >
+            <div class="form-group">
+              <label>Warranty:</label>
+              <input type="text" formControlName="warrenty">
+              <div *ngIf="productForm.get('warrenty')?.touched && productForm.get('warrenty')?.invalid">
+                <small class="error">warranty is required.</small>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Brand:</label>
+              <input type="text" formControlName="brand">
+              <div *ngIf="productForm.get('brand')?.touched && productForm.get('brand')?.invalid">
+                <small class="error">brand is required.</small>
+              </div>
+            </div>
+          </div>
+        } @else if (categoryId ==2){
+          <div>
+            <div class="form-group">
+              <label>Size:</label>
+              <input type="text" formControlName="size">
+            </div>
+            <div class="form-group">
+              <label>Colour:</label>
+              <input type="text" formControlName="colour">
+            </div>
+          </div>
+        }
+
+        <button type="submit" [disabled]="productForm.invalid">Submit</button>
+
+      </form>
+      </div>
+    }
+
+
+
+</div>
+
+<p-toast />
