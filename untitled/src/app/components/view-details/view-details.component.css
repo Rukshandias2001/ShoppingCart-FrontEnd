@@ -1,0 +1,32 @@
+.product-details-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  gap: 40px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  margin: 30px auto;
+  max-width: 1200px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.image-section img {
+  width: 600px;
+  height: 600px;
+  border-radius: 10px;
+}
+
+.info-section {
+  flex: 1;
+}
+
+.info-section h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: #555;
+}

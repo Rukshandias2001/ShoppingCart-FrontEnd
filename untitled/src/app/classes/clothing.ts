@@ -10,9 +10,10 @@ export class Clothing extends Product{
     price: number,
     quantity: number,
     imageUrl:string,
-    categoryId:number
+    categoryId:number,
+    id:number
   ) {
-    super(name, description, price, quantity,imageUrl,categoryId); // Pass the parameters correctly to the Product class constructor
+    super(id,name, description, price, quantity,imageUrl,categoryId); // Pass the parameters correctly to the Product class constructor
   }
 
 }

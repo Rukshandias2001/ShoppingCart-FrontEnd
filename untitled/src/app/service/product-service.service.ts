@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {Product} from '../classes/product';
 import {Electronic} from '../classes/electronic';
 import {environment} from '../../environments/environment';
+import {Clothing} from '../classes/clothing';
 
 @Injectable({
   providedIn: 'root'
@@ -42,5 +43,13 @@ export class ProductServiceService {
       }
     )
   }
+
+  getProductById(id:number):Observable<Clothing | Electronic>{
+    return  this.httpclient.get<Clothing | Electronic>(`${this.baseUrl}/product/getProductById/${id}`,{
+      responseType:'json'
+    })
+  }
+
+
 
 }

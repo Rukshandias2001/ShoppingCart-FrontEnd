@@ -1,0 +1,23 @@
+<div class="product-details-container">
+  <div class="image-section">
+    <img [src]="product.imageUrl" alt="{{ product.name }}" />
+  </div>
+  <div class="info-section">
+    <h2>{{ product.name }}</h2>
+    <p class="description">{{ product.description }}</p>
+    <p><strong>Price:</strong> Rs. {{ product.price }}</p>
+    <!-- If it's a Clothing product -->
+    <div *ngIf="isClothing(product)">
+      <p><strong>Size:</strong> {{ product.size }}</p>
+      <p><strong>Colour:</strong> {{ product.colour }}</p>
+    </div>
+
+    <!-- If it's an Electronic product -->
+    <div *ngIf="isElectronic(product)">
+      <p><strong>Warranty:</strong> {{ product.warranty }}</p>
+      <p><strong>Brand:</strong> {{ product.brand }}</p>
+    </div>
+
+    <p><strong>Available Quantity:</strong> {{ product.quantity }}</p>
+  </div>
+</div>

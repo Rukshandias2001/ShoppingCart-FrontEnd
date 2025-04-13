@@ -7,6 +7,9 @@ import {Toast} from 'primeng/toast';
 import {MessageService} from 'primeng/api';
 import {NgIf} from '@angular/common';
 import { ProgressSpinner } from 'primeng/progressspinner';
+import {CartServiceService} from '../../service/cart-service.service';
+import {SelectedItems} from '../../classes/selected-items';
+import {Product} from '../../classes/product';
 
 
 
@@ -28,7 +31,6 @@ import { ProgressSpinner } from 'primeng/progressspinner';
 export class AddProductComponent implements OnInit{
 
   productForm!:FormGroup;
-
   categoryId!: number;
   warrenty!: string;
   brand!: string;
@@ -184,6 +186,7 @@ export class AddProductComponent implements OnInit{
     }
 
   }
+
 
 
 }
