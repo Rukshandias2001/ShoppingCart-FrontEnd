@@ -37,7 +37,9 @@ export class ViewProductComponent implements OnInit{
   }
 
   showSuccess() {
+    this.cartService.calculatePrice();
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Added to cart ' });
+
   }
 
   showError(err:object) {
@@ -113,4 +115,6 @@ export class ViewProductComponent implements OnInit{
       }
     })
   }
+
+
 }

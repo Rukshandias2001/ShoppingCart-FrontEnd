@@ -7,7 +7,7 @@
     <label for="sortBy">Sort by:</label>
     <select id="sortBy" [(ngModel)]="sortOption" (change)="sortProducts()">
       <option value="price">Price</option>
-      <option value="price">Product Name</option>
+      <option value="productName">Product Name</option>
 
       <!-- Add other sorting options if needed -->
     </select>
@@ -18,7 +18,7 @@
       <img [src]="product.imageUrl" alt="Product image">
       <div>
         <h4>{{ product.productName }}</h4>
-        <p>Description: {{ product.description }}</p>
+        <p>Description: {{ product.description?.slice(0, 100) }}...</p>
       </div>
     </div>
     <div class="cart-item-controls">
@@ -49,6 +49,8 @@
     <button (click)="checkoutForm()">PROCEED TO PAY</button>
   </div>
 </div>
+
+<p-toast></p-toast>
 
 
 
