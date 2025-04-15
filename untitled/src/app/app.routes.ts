@@ -5,11 +5,13 @@ import {ViewDetailsComponent} from './components/view-details/view-details.compo
 import {SelectedItems} from './classes/selected-items';
 import {SelectedItemsComponent} from './components/selected-items/selected-items.component';
 import {CheckoutFormComponent} from './components/checkout-form/checkout-form.component';
+import {RecieptComponent} from './components/reciept/reciept.component';
 
 export const routes: Routes = [
   {path:"addProduct",  component:AddProductComponent},
   {path:"viewProduct", component:ViewProductComponent},
   {path:"viewProductDetails/:id",component:ViewDetailsComponent},
   {path:"selectedItems",component:SelectedItemsComponent},
-  {path:"checkoutForm",component:CheckoutFormComponent}
+  {path:"checkoutForm",component:CheckoutFormComponent},
+  {path:"receipt/:id",component:RecieptComponent}
 ];

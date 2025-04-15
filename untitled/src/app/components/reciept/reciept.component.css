@@ -7,13 +7,11 @@ body {
 
 .container {
   max-width: 600px;
-  margin: 0 auto; /* Changed from 50px */
+  margin: 50px auto;
   background: #fff;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  position: relative;
-  box-sizing: border-box;
 }
 
 h2 {
@@ -66,8 +64,4 @@ button.btn:hover {
   width: 100%;
   padding: 10px;
   border: 1px solid
-}
-.error-message {
-  color: red;
-  font-size: 0.875rem;
 }

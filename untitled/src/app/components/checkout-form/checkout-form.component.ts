@@ -1,9 +1,22 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {NgForOf, NgIf} from '@angular/common';
+import {CartServiceService} from '../../service/cart-service.service';
+import {OrderServiceService} from '../../service/order-service.service';
+import {SelectedItems} from '../../classes/selected-items';
+import {Country} from '../../classes/country';
+import {State} from '../../classes/state';
+import swal from "sweetalert2";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-checkout-form',
-  imports: [],
+  imports: [
+    ReactiveFormsModule,
+    NgForOf,
+    NgIf
+  ],
   standalone:true,
   templateUrl: './checkout-form.component.html',
   styleUrl: './checkout-form.component.css'
@@ -11,28 +24,136 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class CheckoutFormComponent implements OnInit{
 
   checkoutForm!:FormGroup
+  listOfCards = ["MasterCard","VisaCard"];
+  price!:number;
+  listOfCountries!: Array<Country>
+  listOfStates!:Array<State>
+
+
 
   ngOnInit(): void {
-
+    this.fetchPrice()
+    this.getCountries();
   }
 
-  constructor(private formBuilder:FormBuilder) {
+  constructor(private formBuilder:FormBuilder,
+              public dialogRef: MatDialogRef<CheckoutFormComponent>,
+              private cartService:CartServiceService,
+              private orderService:OrderServiceService,
+              router:Router,
+              @Inject(MAT_DIALOG_DATA) public selectedItems: SelectedItems[]) {
+
     this.checkoutForm = this.formBuilder.group({
       firstName: ["", Validators.required],
       lastName: ["", Validators.required],
       email: ["", [Validators.required, Validators.email]],
-      phone: ["", [Validators.required, Validators.pattern("^[0-9]{10}$")]],
-      address1: ["", Validators.required],
+      date: ["",[Validators.required]],
+      country: ["", Validators.required],
       city: ["", Validators.required],
-      state: ["", Validators.required],
-      postalCode: ["", [Validators.required, Validators.pattern("^[0-9]{5}$")]],
-      cardType: ["visa", Validators.required],
-      cardNumber: ["", [Validators.required, Validators.pattern("^[0-9]{16}$")]],
-      expiryDate: ["", [Validators.required, Validators.pattern("^(0[1-9]|1[0-2])\/([0-9]{2})$")]],
-      cvv: ["", [Validators.required, Validators.pattern("^[0-9]{3,4}$")]]
+      price:[this.price],
+      cardType: ["", Validators.required],
+      cardNumber: ["", [Validators.required]],
+      expiryDate: ["", [Validators.required]],
+
     });
   }
 
+  fetchPrice(){
+    this.cartService.calculatePrice()
+    this.cartService.totalprice.subscribe({
+      next:(data)=>{
+        this.price=data
+        this.checkoutForm.patchValue({ price: this.price });
+      },
+      error:(err)=>{
+        console.log(err)
+      },
+      complete:()=>{
+        console.log("process Completed")
+    }
+    })
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
+  }
 
 
+  onSubmit() {
+    let selectedProductList = this.orderService.getSelectedProductList(this.selectedItems);
+    const orderData = {
+      id: 1, // or another identifier if needed
+      userName: this.checkoutForm.value.firstName,
+      lastName: this.checkoutForm.value.lastName,
+      date: this.checkoutForm.value.date,
+      expiryDate: this.checkoutForm.value.expiryDate,
+      nameOfCard: this.checkoutForm.value.cardType,
+      creditCardNumber: this.checkoutForm.value.cardNumber,
+      email: this.checkoutForm.value.email,
+      cardType: this.checkoutForm.value.cardType,
+      price: this.price,
+      listOfProducts: this.orderService.getSelectedProductList(this.selectedItems),
+      orderList:this.selectedItems,
+    };
+    this.orderService.saveOrder(orderData).subscribe({
+      next:(data)=>{
+        this.checkoutForm.reset();
+        swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Successfully purchased the items !",
+          showConfirmButton: false,
+          timer: 3500
+        });
+
+      },
+      error:(err)=>{
+        swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Internal Server Error !",
+          showConfirmButton: false,
+          timer: 3500
+        });
+      },
+      complete:()=>{
+        this.dialogRef.close();
+      }
+    })
+
+  }
+
+  getCountries() {
+    this.orderService.getCountries().subscribe({
+      next:(data)=>{
+        this.listOfCountries = data;
+      },
+      error:(err)=>{
+        console.log(err)
+      },
+      complete:()=>{
+        console.log("Process Completed !")
+      }
+    })
+  }
+
+  getStates(event:Event){
+    const selectElement = event.target as HTMLSelectElement;
+    console.log(selectElement.options.selectedIndex)
+    const countryId = Number(selectElement.options.selectedIndex);
+
+    this.orderService.getStates(countryId).subscribe({
+      next:(data)=>{
+        console.log(data)
+        this.listOfStates = data;
+      },
+      error:(err)=>{
+        console.log(err)
+      },
+      complete:()=>{
+        console.log("Process Completed !")
+      }
+    })
+
+  }
 }

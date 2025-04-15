@@ -6,6 +6,8 @@ import {CartServiceService} from '../../service/cart-service.service';
 import {MessageService} from 'primeng/api';
 import {Toast} from 'primeng/toast';
 import {Router} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
+import {CheckoutFormComponent} from '../checkout-form/checkout-form.component';
 
 @Component({
   selector: 'app-selected-items',
@@ -25,7 +27,7 @@ export class SelectedItemsComponent implements  OnInit{
     discountCode: any;
     email!:string;
 
-  constructor(private cartService:CartServiceService,private messageService:MessageService,private router:Router) {
+  constructor(private cartService:CartServiceService,private messageService:MessageService,private router:Router,private dialog: MatDialog) {
 
   }
 
@@ -147,6 +149,17 @@ export class SelectedItemsComponent implements  OnInit{
   }
 
   checkoutForm() {
-    this.router.navigate(["checkoutForm"])
+    const dialogRef= this.dialog.open(CheckoutFormComponent, {
+      width: '100%',
+      maxWidth: '600px',
+      panelClass: 'custom-dialog-container',
+      autoFocus: false, // <- very important for spacing
+      data: this.selectedItems  // 👈 Passing the array here
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog closed:', result);
+    });
   }
 }
