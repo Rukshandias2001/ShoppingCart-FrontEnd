@@ -8,6 +8,7 @@ import {Toast} from 'primeng/toast';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {CheckoutFormComponent} from '../checkout-form/checkout-form.component';
+import {AuthServiceService} from '../../service/auth-service.service';
 
 @Component({
   selector: 'app-selected-items',
@@ -27,12 +28,12 @@ export class SelectedItemsComponent implements  OnInit{
     discountCode: any;
     email!:string;
 
-  constructor(private cartService:CartServiceService,private messageService:MessageService,private router:Router,private dialog: MatDialog) {
+  constructor(private authService:AuthServiceService,private cartService:CartServiceService,private messageService:MessageService,private router:Router,private dialog: MatDialog) {
 
   }
 
   ngOnInit(): void {
-    this.email = "diasrukshan21@gmail.com"
+    this.getUserDetails()
     this.fetchTheLoad()
   }
   showSuccess() {
@@ -88,7 +89,7 @@ export class SelectedItemsComponent implements  OnInit{
   }
 
   addItem(product: SelectedItems) {
-    let selectedItems = new SelectedItems(1,product.productId,product.productName,product.imageUrl,product.categoryId+"",product.price,1,product.description,product.categoryId,"diasrukshan21@gmail.com")
+    let selectedItems = new SelectedItems(1,product.productId,product.productName,product.imageUrl,product.categoryId+"",product.price,1,product.description,product.categoryId,this.email)
 
     this.cartService.saveSelectedItems(selectedItems).subscribe({
       next:( data)=>{
@@ -108,7 +109,7 @@ export class SelectedItemsComponent implements  OnInit{
   }
 
   remove(product: SelectedItems) {
-    let selectedItems = new SelectedItems(1,product.productId,product.productName,product.imageUrl,product.categoryId+"",product.price,-1,product.description,product.categoryId,"diasrukshan21@gmail.com")
+    let selectedItems = new SelectedItems(1,product.productId,product.productName,product.imageUrl,product.categoryId+"",product.price,-1,product.description,product.categoryId,this.email)
 
     this.cartService.saveSelectedItems(selectedItems).subscribe({
       next:( data)=>{
@@ -139,9 +140,6 @@ export class SelectedItemsComponent implements  OnInit{
       );
     }
 
-
-
-
   }
 
   applyDiscount() {
@@ -161,5 +159,11 @@ export class SelectedItemsComponent implements  OnInit{
     dialogRef.afterClosed().subscribe(result => {
       console.log('Dialog closed:', result);
     });
+  }
+
+
+  getUserDetails(){
+    this.email = this.authService.getUserDetails().email;
+    console.log(this.email)
   }
 }

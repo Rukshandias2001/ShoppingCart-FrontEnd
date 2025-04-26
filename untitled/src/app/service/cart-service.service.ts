@@ -4,6 +4,7 @@ import {Product} from '../classes/product';
 import {SelectedItems} from '../classes/selected-items';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
+import {AuthServiceService} from './auth-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +16,17 @@ export class CartServiceService implements OnInit{
   listOfQuantities:BehaviorSubject<number> = new BehaviorSubject<number>(0);
   totalprice:BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
-  constructor(private httpclient:HttpClient) {
+  constructor(private httpclient:HttpClient,private authService:AuthServiceService) {
 
   }
   ngOnInit(): void {
+
        this.calculatePrice()
   }
 
   calculatePrice() {
-    this.getSelectedItems("diasrukshan21@gmail.com").subscribe({
+    let email = this.authService.getUserDetails().email
+    this.getSelectedItems(email).subscribe({
       next: (data) => {
         if (data.length > 0) {
           let quantity = 0;

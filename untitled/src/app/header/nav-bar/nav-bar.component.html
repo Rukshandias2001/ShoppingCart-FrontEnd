@@ -35,15 +35,19 @@
           <span class="cart-badge">{{ numberOfQuantities }}</span>
         </span>
       </li>
-      <li  class="nav-item me-5">
-        <div class="profile-pic">
+      <li class="nav-item dropdown me-5">
+        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+           data-bs-toggle="dropdown" aria-expanded="false">
           <img
-            routerLink="/account"
             alt="Profile"
             class="rounded-circle"
             style="width: 40px; height: 40px; border-radius: 50%;"
             [src]="profilepic">
-        </div>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+          <li><a class="dropdown-item" routerLink="/account">Account</a></li>
+          <li><a class="dropdown-item" routerLink="/login">Logout</a></li>
+        </ul>
       </li>
     </ul>
   </div>

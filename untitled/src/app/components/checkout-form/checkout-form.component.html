@@ -4,21 +4,21 @@
   <form  [formGroup]="checkoutForm" (ngSubmit)="onSubmit()"  class="checkout-form">
     <div class="form-group">
       <label for="fname" >First Name</label>
-      <input type="text" id="fname" name="firstName" formControlName="firstName">
+      <input type="text" id="fname" name="firstName" formControlName="firstName" [disabled]="true" readonly>
       <div class="text-red-500 text-sm error-message" *ngIf="checkoutForm.get('firstName')?.touched && checkoutForm.get('firstName')?.invalid" >
         First name is required.
       </div>
     </div>
     <div class="form-group">
       <label for="lname">Last Name</label>
-      <input type="text" id="lname" name="lastName"  formControlName="lastName">
+      <input type="text" id="lname" name="lastName"  formControlName="lastName" [disabled]="true" readonly>
       <div class="text-red-500 text-sm error-message" *ngIf="checkoutForm.get('lastName')?.touched && checkoutForm.get('lastName')?.invalid">
         Last name is required.
       </div>
     </div>
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="email" id="email" name="email"   formControlName="email">
+      <input type="email" id="email" name="email"   formControlName="email" [disabled]="true" readonly>
       <div class="text-red-500 text-sm error-message" *ngIf="checkoutForm.get('email')?.touched && checkoutForm.get('email')?.invalid">
         <span *ngIf="checkoutForm.get('email')?.errors?.['required']">Email is required.</span>
         <span *ngIf="checkoutForm.get('email')?.errors?.['email']">Invalid email address.</span>

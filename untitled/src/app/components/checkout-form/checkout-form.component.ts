@@ -9,6 +9,7 @@ import {Country} from '../../classes/country';
 import {State} from '../../classes/state';
 import swal from "sweetalert2";
 import {Router} from '@angular/router';
+import {AuthServiceService} from '../../service/auth-service.service';
 
 @Component({
   selector: 'app-checkout-form',
@@ -28,12 +29,15 @@ export class CheckoutFormComponent implements OnInit{
   price!:number;
   listOfCountries!: Array<Country>
   listOfStates!:Array<State>
-
+  email!:string;
+  userName!:string;
+  lastName!:string;
 
 
   ngOnInit(): void {
     this.fetchPrice()
     this.getCountries();
+
   }
 
   constructor(private formBuilder:FormBuilder,
@@ -41,12 +45,17 @@ export class CheckoutFormComponent implements OnInit{
               private cartService:CartServiceService,
               private orderService:OrderServiceService,
               router:Router,
-              @Inject(MAT_DIALOG_DATA) public selectedItems: SelectedItems[]) {
+              @Inject(MAT_DIALOG_DATA) public selectedItems: SelectedItems[],
+              private authService:AuthServiceService) {
+
+    this.email = this.authService.getUserDetails().email;
+    this.userName = this.authService.getUserDetails().sub;
+    this.lastName = this.authService.getUserDetails().lastName;
 
     this.checkoutForm = this.formBuilder.group({
-      firstName: ["", Validators.required],
-      lastName: ["", Validators.required],
-      email: ["", [Validators.required, Validators.email]],
+      firstName: [this.userName],
+      lastName: [this.lastName],
+      email: [this.email],
       date: ["",[Validators.required]],
       country: ["", Validators.required],
       city: ["", Validators.required],
@@ -154,6 +163,7 @@ export class CheckoutFormComponent implements OnInit{
         console.log("Process Completed !")
       }
     })
-
   }
+
+
 }

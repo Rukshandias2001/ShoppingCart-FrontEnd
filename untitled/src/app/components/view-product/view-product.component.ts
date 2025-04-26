@@ -9,6 +9,10 @@ import {SelectedItems} from '../../classes/selected-items';
 import {CartServiceService} from '../../service/cart-service.service';
 import {MessageService} from 'primeng/api';
 import {Toast} from 'primeng/toast';
+import {AuthServiceService} from '../../service/auth-service.service';
+import {provideAnimations} from '@angular/platform-browser/animations';
+
+import { trigger, transition, style, animate } from '@angular/animations';
 
 
 @Component({
@@ -21,18 +25,27 @@ import {Toast} from 'primeng/toast';
 
 
   ],
-  providers: [MessageService],
+  providers: [MessageService, provideAnimations()],
   templateUrl: './view-product.component.html',
   styleUrl: './view-product.component.css',
-  standalone:true
+  standalone:true,
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('600ms ease-in', style({ opacity: 1 }))
+      ])
+    ])
+  ]
 })
 export class ViewProductComponent implements OnInit{
   products: Array<Product>=[];
   searchTerm: string = '';
   currentPage: number = 1;
   itemsPerPage: number = 8;
+  email:string="";
 
-  constructor(private productService:ProductServiceService,private router:Router,private cartService:CartServiceService,private messageService:MessageService) {
+  constructor(private authService:AuthServiceService,private productService:ProductServiceService,private router:Router,private cartService:CartServiceService,private messageService:MessageService) {
 
   }
 
@@ -48,7 +61,9 @@ export class ViewProductComponent implements OnInit{
   }
 
     ngOnInit(): void {
+        this.fetchUserDetails()
         this.fetchData()
+
     }
 
   onSearch() {
@@ -100,7 +115,7 @@ export class ViewProductComponent implements OnInit{
 
 
   addItems(product:Product){
-    let selectedItems = new SelectedItems(1,product.id,product.name,product.imageUrl,product.categoryId+"",product.price,1,product.description,product.categoryId,"diasrukshan21@gmail.com")
+    let selectedItems = new SelectedItems(1,product.id,product.name,product.imageUrl,product.categoryId+"",product.price,1,product.description,product.categoryId,this.email)
     this.cartService.saveSelectedItems(selectedItems).subscribe({
       next:( data)=>{
         this.showSuccess()
@@ -114,6 +129,10 @@ export class ViewProductComponent implements OnInit{
         console.log("Process complete !")
       }
     })
+  }
+
+  fetchUserDetails(){
+    this.email = this.authService.getUserDetails().email;
   }
 
 

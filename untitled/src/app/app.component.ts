@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
 import {AddProductComponent} from './components/add-product/add-product.component';
 
 import {FooterComponent} from './header/footer/footer.component';
 import {NavBarComponent} from './header/nav-bar/nav-bar.component';
+
 
 
 @Component({
@@ -15,6 +16,17 @@ import {NavBarComponent} from './header/nav-bar/nav-bar.component';
 })
 export class AppComponent {
   title = 'untitled';
+
+  hideLayout = false;
+
+  constructor(private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        // Routes where you want to HIDE nav and footer
+        this.hideLayout = event.url === '/' || event.url.startsWith('/login');
+      }
+    });
+  }
 
 
 

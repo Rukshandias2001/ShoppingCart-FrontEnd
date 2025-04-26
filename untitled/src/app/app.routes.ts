@@ -6,12 +6,17 @@ import {SelectedItems} from './classes/selected-items';
 import {SelectedItemsComponent} from './components/selected-items/selected-items.component';
 import {CheckoutFormComponent} from './components/checkout-form/checkout-form.component';
 import {RecieptComponent} from './components/reciept/reciept.component';
+import {RegistrationComponent} from './components/registration/registration.component';
+import {LoginComponent} from './components/login/login.component';
+import {authGuard} from './auth.guard';
 
 export const routes: Routes = [
-  {path:"addProduct",  component:AddProductComponent},
-  {path:"viewProduct", component:ViewProductComponent},
-  {path:"viewProductDetails/:id",component:ViewDetailsComponent},
-  {path:"selectedItems",component:SelectedItemsComponent},
-  {path:"checkoutForm",component:CheckoutFormComponent},
-  {path:"receipt/:id",component:RecieptComponent}
+  {path:"addProduct",  component:AddProductComponent,canActivate: [authGuard] ,data:{role:["CUSTOMER"]}},
+  {path:"viewProduct", component:ViewProductComponent,canActivate:[authGuard],data:{role:["CUSTOMER"]}},
+  {path:"viewProductDetails/:id",component:ViewDetailsComponent,canActivate:[authGuard],data:{role:["CUSTOMER"]}},
+  {path:"selectedItems",component:SelectedItemsComponent,canActivate:[authGuard],data:{role:["CUSTOMER"]}},
+  {path:"checkoutForm",component:CheckoutFormComponent,canActivate:[authGuard],data:{role:["CUSTOMER"]}},
+  {path:"receipt/:id",component:RecieptComponent,canActivate:[authGuard],data:{role:["CUSTOMER"]}},
+  {path:"login",component:LoginComponent},
+  {path:"",component:RegistrationComponent}
 ];

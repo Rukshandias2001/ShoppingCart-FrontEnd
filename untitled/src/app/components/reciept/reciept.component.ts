@@ -3,6 +3,7 @@ import {OrderList} from 'primeng/orderlist';
 import {OrderedList} from '../../classes/ordered-list';
 import {Router} from '@angular/router';
 import {CurrencyPipe, DatePipe, NgForOf} from '@angular/common';
+import {AuthServiceService} from '../../service/auth-service.service';
 
 @Component({
   selector: 'app-reciept',
@@ -27,12 +28,16 @@ export class RecieptComponent implements OnInit{
         throw new Error('Method not implemented.');
     }
 
-    constructor(router:Router) {
+    constructor(router:Router,authService:AuthServiceService) {
 
     }
 
 
   redirectToPage() {
+
+  }
+
+  fetchUserDetails(){
 
   }
 }

@@ -1,0 +1,17 @@
+<div class="register-container">
+  <h2>Create Your Account</h2>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+    <input type="text" placeholder="First Name" formControlName="userName" />
+    <input type="text" placeholder="Last Name" formControlName="lastName" />
+    <input type="email" placeholder="Email" formControlName="email" />
+
+    <input type="password" placeholder="Password" formControlName="password" />
+    <input type="password" placeholder="Confirm Password" formControlName="confirmPassword" />
+
+    <button (click)="directToLoginPage()" >Login</button>
+
+    <button type="submit" [disabled]="registerForm.invalid">Register</button>
+  </form>
+</div>
+<p-toast/>
