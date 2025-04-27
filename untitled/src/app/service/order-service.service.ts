@@ -42,4 +42,10 @@ export class OrderServiceService {
 
   }
 
+  getOrderReciept(email:string):Observable<object>{
+    let formData = new FormData();
+    formData.append("email",email)
+    return  this.httpclient.post<object>(`${this.baseUrl}/user/GetReciept`,formData,{responseType: 'json'})
+  }
+
 }

@@ -78,5 +78,8 @@ export class LoginComponent implements OnInit{
     }
   }
 
+  directToLoginPage(){
+    this.router.navigate(['/'])
+  }
 
 }

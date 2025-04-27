@@ -4,12 +4,13 @@ import {AddProductComponent} from './components/add-product/add-product.componen
 
 import {FooterComponent} from './header/footer/footer.component';
 import {NavBarComponent} from './header/nav-bar/nav-bar.component';
+import {NgIf} from '@angular/common';
 
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, FooterComponent, NavBarComponent],
+  imports: [RouterOutlet, FooterComponent, NavBarComponent, NgIf],
   templateUrl: './app.component.html',
   standalone: true,
   styleUrl: './app.component.css'

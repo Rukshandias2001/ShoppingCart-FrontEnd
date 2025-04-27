@@ -4,6 +4,8 @@ import {OrderedList} from '../../classes/ordered-list';
 import {Router} from '@angular/router';
 import {CurrencyPipe, DatePipe, NgForOf} from '@angular/common';
 import {AuthServiceService} from '../../service/auth-service.service';
+import {OrderServiceService} from '../../service/order-service.service';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-reciept',
@@ -19,16 +21,20 @@ import {AuthServiceService} from '../../service/auth-service.service';
 export class RecieptComponent implements OnInit{
     productList!:Array<OrderedList>
     firstName!: string;
+    lastName!:string;
     email!: string;
     paidDate!:string;
     price!:number ;
     cardType!:string;
 
     ngOnInit(): void {
-        throw new Error('Method not implemented.');
-    }
+      this.fetchUserDetails()
 
-    constructor(router:Router,authService:AuthServiceService) {
+    }
+    constructor(router:Router,
+                private authService:AuthServiceService,
+                private orderService:OrderServiceService,
+                public dialogRef: MatDialogRef<RecieptComponent>) {
 
     }
 
@@ -38,6 +44,32 @@ export class RecieptComponent implements OnInit{
   }
 
   fetchUserDetails(){
+    this.email = this.authService.getUserDetails().email;
+    this.firstName = this.authService.getUserDetails().firstName;
+    this.lastName = this.authService.getUserDetails().lastName;
+    this.fetchData()
+
 
   }
+  fetchData(){
+      this.orderService.getOrderReciept(this.email).subscribe({
+        next:(data)=>{
+          console.log(data)
+
+          // @ts-ignore
+          this.productList = data.orderedList;
+        },
+        error:(err)=>{
+          console.log(err)
+        },
+        complete:()=>{
+          console.log("process completed")
+        }
+      })
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
+  }
+
 }

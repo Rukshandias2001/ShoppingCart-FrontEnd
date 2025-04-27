@@ -1,17 +1,42 @@
-<div class="register-container">
-  <h2>Create Your Account</h2>
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+<div class="register-wrapper">
+  <div class="register-left">
+    <div class="register-card">
+      <h1>Logo Here</h1>
+      <h2>Create Your Account</h2>
 
-    <input type="text" placeholder="First Name" formControlName="userName" />
-    <input type="text" placeholder="Last Name" formControlName="lastName" />
-    <input type="email" placeholder="Email" formControlName="email" />
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <input type="text" placeholder="First Name" formControlName="userName" />
+        </div>
 
-    <input type="password" placeholder="Password" formControlName="password" />
-    <input type="password" placeholder="Confirm Password" formControlName="confirmPassword" />
+        <div class="form-group">
+          <input type="text" placeholder="Last Name" formControlName="lastName" />
+        </div>
 
-    <button (click)="directToLoginPage()" >Login</button>
+        <div class="form-group">
+          <input type="email" placeholder="Email" formControlName="email" />
+        </div>
 
-    <button type="submit" [disabled]="registerForm.invalid">Register</button>
-  </form>
+        <div class="form-group">
+          <input type="password" placeholder="Password" formControlName="password" />
+        </div>
+
+        <div class="form-group">
+          <input type="password" placeholder="Confirm Password" formControlName="confirmPassword" />
+        </div>
+
+        <button type="submit" [disabled]="registerForm.invalid" class="register-btn">Register</button>
+
+        <p class="login-text">
+          Already have an account? <a (click)="directToLoginPage()">Login</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <div class="register-right">
+    <img src="https://res.cloudinary.com/diwak35f5/image/upload/v1745732702/newLogo_ac9igp.png" alt="Registration Image">
+  </div>
 </div>
-<p-toast/>
+
+<p-toast></p-toast>

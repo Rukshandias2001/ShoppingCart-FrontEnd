@@ -36,15 +36,18 @@ export class AuthServiceService {
     sessionStorage.setItem("login-User",JSON.stringify(jwtPayload))
   }
 
-  getUserDetails(){
-    let user = sessionStorage.getItem("login-User");
-    if (user) {
-      const commonUser = JSON.parse(user);
+  getUserDetails() {
+    const user = sessionStorage.getItem("login-User");
 
-      return commonUser;
-    } else {
-      return null; // or you can handle it differently
+    if (user) {
+      try {
+        return JSON.parse(user);
+      } catch (error) {
+        console.error("Failed to parse user details:", error);
+        return null;
+      }
     }
+    return null;
   }
 
 

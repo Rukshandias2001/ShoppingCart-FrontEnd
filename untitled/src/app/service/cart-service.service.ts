@@ -25,7 +25,14 @@ export class CartServiceService implements OnInit{
   }
 
   calculatePrice() {
+
     let email = this.authService.getUserDetails().email
+    if (!email) {
+      console.error("User is not logged in or user details not available.");
+      return; // Stop here if no user details
+    }
+
+
     this.getSelectedItems(email).subscribe({
       next: (data) => {
         if (data.length > 0) {

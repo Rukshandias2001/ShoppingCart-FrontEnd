@@ -1,67 +1,72 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f2f2f2;
-  margin: 0;
-  padding: 0;
-}
+.invoice-container {
 
-.container {
-  max-width: 600px;
-  margin: 50px auto;
-  background: #fff;
+  max-width: 800px;
+  margin: auto;
+  background: #f7f7f7;
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  transform: translateY(10px);
 }
 
-h2 {
+.invoice-container h1 {
   text-align: center;
+  color: #333;
   margin-bottom: 20px;
-  color: #333;
 }
 
-.form-group {
-  margin-bottom: 15px;
+.invoice-container h2 {
+  text-align: center;
+  color: #777;
+  margin-bottom: 30px;
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
-  color: #333;
+.invoice-details p {
+  font-size: 16px;
+  margin: 5px 0;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="number"] {
+.invoice-details p strong {
+  color: #000;
+}
+
+.invoice-table {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="number"]:focus {
-  border-color: #007bff;
+.invoice-table th,
+.invoice-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
 }
 
-button.btn {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
+.invoice-table th {
+  background-color: #f2f2f2;
+}
+
+.invoice-table img.product-image {
+  max-width: 100px;
+  height: auto;
+}
+
+.add-button {
+  background-color: #28a745;
   color: white;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button.btn:hover {
-  background-color: #0056b3;
-}
-
-.custom-select {
-  width: 100%;
   padding: 10px;
-  border: 1px solid
+  margin: 5px 0;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  width: 100%;
 }
+
+.add-button:hover {
+  background-color: #218838;
+}
+

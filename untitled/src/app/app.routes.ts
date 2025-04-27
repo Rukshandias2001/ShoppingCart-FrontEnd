@@ -16,7 +16,7 @@ export const routes: Routes = [
   {path:"viewProductDetails/:id",component:ViewDetailsComponent,canActivate:[authGuard],data:{role:["CUSTOMER"]}},
   {path:"selectedItems",component:SelectedItemsComponent,canActivate:[authGuard],data:{role:["CUSTOMER"]}},
   {path:"checkoutForm",component:CheckoutFormComponent,canActivate:[authGuard],data:{role:["CUSTOMER"]}},
-  {path:"receipt/:id",component:RecieptComponent,canActivate:[authGuard],data:{role:["CUSTOMER"]}},
+  {path:"receipt",component:RecieptComponent,canActivate:[authGuard],data:{role:["CUSTOMER"]}},
   {path:"login",component:LoginComponent},
   {path:"",component:RegistrationComponent}
 ];

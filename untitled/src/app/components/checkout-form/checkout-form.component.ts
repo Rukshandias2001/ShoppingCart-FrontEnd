@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {NgForOf, NgIf} from '@angular/common';
 import {CartServiceService} from '../../service/cart-service.service';
 import {OrderServiceService} from '../../service/order-service.service';
@@ -10,6 +10,7 @@ import {State} from '../../classes/state';
 import swal from "sweetalert2";
 import {Router} from '@angular/router';
 import {AuthServiceService} from '../../service/auth-service.service';
+import {RecieptComponent} from '../reciept/reciept.component';
 
 @Component({
   selector: 'app-checkout-form',
@@ -44,9 +45,10 @@ export class CheckoutFormComponent implements OnInit{
               public dialogRef: MatDialogRef<CheckoutFormComponent>,
               private cartService:CartServiceService,
               private orderService:OrderServiceService,
-              router:Router,
+              private router:Router,
               @Inject(MAT_DIALOG_DATA) public selectedItems: SelectedItems[],
-              private authService:AuthServiceService) {
+              private authService:AuthServiceService,
+              private dialog: MatDialog) {
 
     this.email = this.authService.getUserDetails().email;
     this.userName = this.authService.getUserDetails().sub;
@@ -114,6 +116,9 @@ export class CheckoutFormComponent implements OnInit{
           showConfirmButton: false,
           timer: 3500
         });
+        this.recieptForm()
+
+
 
       },
       error:(err)=>{
@@ -153,8 +158,9 @@ export class CheckoutFormComponent implements OnInit{
 
     this.orderService.getStates(countryId).subscribe({
       next:(data)=>{
-        console.log(data)
+
         this.listOfStates = data;
+
       },
       error:(err)=>{
         console.log(err)
@@ -163,6 +169,21 @@ export class CheckoutFormComponent implements OnInit{
         console.log("Process Completed !")
       }
     })
+  }
+
+  recieptForm() {
+    const dialogRef= this.dialog.open(RecieptComponent, {
+      width: '100%',
+      maxWidth: '600px',
+      panelClass: 'custom-dialog-container',
+      autoFocus: false, // <- very important for spacing
+      data: this.selectedItems  // 👈 Passing the array here
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog closed:', result);
+    });
   }
 
 
