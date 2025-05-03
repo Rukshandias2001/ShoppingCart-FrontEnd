@@ -23,6 +23,7 @@ import {Toast} from 'primeng/toast';
 export class LoginComponent implements OnInit{
 
     registerForm!: FormGroup;
+    role!:string;
 
   constructor(private fb: FormBuilder,private authService:AuthServiceService,private router:Router,private messageService:MessageService) {
 
@@ -39,7 +40,13 @@ export class LoginComponent implements OnInit{
 
   showSuccess() {
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'You have successfully registered !' });
-    this.router.navigate(["/viewProduct"])
+    this.role =this.authService.getUserDetails().role
+    if(this.role === "CUSTOMER"){
+      this.router.navigate(["/viewProduct"])
+    }else{
+      this.router.navigate(["/addProduct"])
+    }
+
   }
 
   warning(){

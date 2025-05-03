@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import "primeicons/primeicons.css";
 import {CartServiceService} from '../../service/cart-service.service';
+import {AuthServiceService} from '../../service/auth-service.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -15,13 +16,18 @@ import {CartServiceService} from '../../service/cart-service.service';
 export class NavBarComponent implements OnInit{
   profilepic:string="R";
   numberOfQuantities:number=0;
+  role!:string;
 
-  constructor(private cartService:CartServiceService) {
+
+
+  constructor(private cartService:CartServiceService,private router:Router,private authService:AuthServiceService) {
     this.fetchDataNumberOfQuantities()
   }
 
   ngOnInit(): void {
+    this.fetchUser();
     this.fetchDataNumberOfQuantities()
+
   }
 
   fetchDataNumberOfQuantities(){
@@ -41,5 +47,14 @@ export class NavBarComponent implements OnInit{
     })
   }
 
+  logout(){
+    sessionStorage.clear();
+    this.router.navigate(["/login"])
+
+  }
+
+  fetchUser(){
+    this.role = this.authService.getUserDetails().role
+  }
 
 }

@@ -172,13 +172,10 @@ export class CheckoutFormComponent implements OnInit{
   }
 
   recieptForm() {
-    const dialogRef= this.dialog.open(RecieptComponent, {
-      width: '100%',
-      maxWidth: '600px',
+    const dialogRef = this.dialog.open(RecieptComponent, {
+      maxWidth: '1000px',
       panelClass: 'custom-dialog-container',
-      autoFocus: false, // <- very important for spacing
-      data: this.selectedItems  // 👈 Passing the array here
-
+      autoFocus: false
     });
 
     dialogRef.afterClosed().subscribe(result => {

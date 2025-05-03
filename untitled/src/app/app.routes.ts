@@ -9,14 +9,17 @@ import {RecieptComponent} from './components/reciept/reciept.component';
 import {RegistrationComponent} from './components/registration/registration.component';
 import {LoginComponent} from './components/login/login.component';
 import {authGuard} from './auth.guard';
+import {DashboardComponentComponent} from './components/dashboard-component/dashboard-component.component';
 
 export const routes: Routes = [
-  {path:"addProduct",  component:AddProductComponent,canActivate: [authGuard] ,data:{role:["CUSTOMER"]}},
+  {path:"addProduct",  component:AddProductComponent,canActivate: [authGuard] ,data:{role:["ADMIN"]}},
   {path:"viewProduct", component:ViewProductComponent,canActivate:[authGuard],data:{role:["CUSTOMER"]}},
   {path:"viewProductDetails/:id",component:ViewDetailsComponent,canActivate:[authGuard],data:{role:["CUSTOMER"]}},
   {path:"selectedItems",component:SelectedItemsComponent,canActivate:[authGuard],data:{role:["CUSTOMER"]}},
   {path:"checkoutForm",component:CheckoutFormComponent,canActivate:[authGuard],data:{role:["CUSTOMER"]}},
   {path:"receipt",component:RecieptComponent,canActivate:[authGuard],data:{role:["CUSTOMER"]}},
+  {path:"dashBoard",component:DashboardComponentComponent,canActivate:[authGuard],data:{role:["ADMIN"]}},
   {path:"login",component:LoginComponent},
+
   {path:"",component:RegistrationComponent}
 ];

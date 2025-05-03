@@ -5,36 +5,44 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/viewProduct">Available Items</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-           role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Admin Privileges
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <li><a class="dropdown-item" routerLink="/addProduct">Add product</a></li>
-          <li><a class="dropdown-item" routerLink="#">Another action</a></li>
-          <li><a class="dropdown-item" routerLink="#">Something else here</a></li>
-        </ul>
-      </li>
+      @if (role=="CUSTOMER"){
+        <li class="nav-item active">
+          <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/viewProduct">Available Items</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pricing</a>
+        </li>
+      }
+
+      @if (role=="ADMIN"){
+        <li class="nav-item dropdown" >
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+             role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Admin Privileges
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" routerLink="/addProduct">Add product</a></li>
+            <li><a class="dropdown-item" routerLink="/dashBoard">Admin Dashboard</a></li>
+            <li><a class="dropdown-item" routerLink="#">Something else here</a></li>
+          </ul>
+        </li>
+      }
+
     </ul>
     <!-- Right side cart icon -->
 
     <ul class="navbar-nav ms-auto">
-      <li class="nav-item me-5">
+      @if (role=="CUSTOMER"){
+        <li class="nav-item me-5">
         <span class="navbar-text position-relative" routerLink="/selectedItems">
           <i class="pi pi-shopping-cart" style="color: black; font-size: 1.6rem;"></i>
           <span class="cart-badge">{{ numberOfQuantities }}</span>
         </span>
-      </li>
+        </li>
+      }
       <li class="nav-item dropdown me-5">
         <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
            data-bs-toggle="dropdown" aria-expanded="false">
@@ -45,8 +53,8 @@
             [src]="profilepic">
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-          <li><a class="dropdown-item" routerLink="/account">Account</a></li>
-          <li><a class="dropdown-item" routerLink="/login">Logout</a></li>
+          <li><a class="dropdown-item"  routerLink="/account">Account</a></li>
+          <li><a class="dropdown-item" (click)="logout()" >Logout</a></li>
         </ul>
       </li>
     </ul>
