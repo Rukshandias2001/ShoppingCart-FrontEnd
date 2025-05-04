@@ -18,6 +18,12 @@ export class NavBarComponent implements OnInit{
   numberOfQuantities:number=0;
   role!:string;
 
+  sidebarVisible = false;
+
+  toggleSidebar() {
+    this.sidebarVisible = !this.sidebarVisible;
+  }
+
 
 
   constructor(private cartService:CartServiceService,private router:Router,private authService:AuthServiceService) {

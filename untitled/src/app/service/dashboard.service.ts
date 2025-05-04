@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 import {CustomerDTO} from '../classes/customer-dto';
 import {ProductDTO} from '../classes/product-dto';
 import {MonthlyIncomeDTO} from '../classes/monthly-income-dto';
+import {ProductRevenueDTO} from '../classes/product-revenue-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -46,5 +47,23 @@ export class DashboardService {
       responseType:'json'})
   }
 
+  getMonthlyIncomeForElectronics(type:string):Observable<Array<ProductRevenueDTO>>{
+
+    let formdata = new FormData();
+    formdata.append("type",type)
+
+    return this.httpclient.post<Array<ProductRevenueDTO>>(`${this.baseUrl}/dashBoard/getRevenueElectronics`,formdata,{
+      responseType:'json'
+    })
+  }
+
+  getMonthlyIncomeForClothing(type:string):Observable<Array<ProductRevenueDTO>>{
+    let formdata = new FormData();
+    formdata.append("type",type)
+
+    return this.httpclient.post<Array<ProductRevenueDTO>>(`${this.baseUrl}/dashBoard/getRevenueClothing`,formdata,{
+      responseType:'json'
+    })
+  }
 
 }

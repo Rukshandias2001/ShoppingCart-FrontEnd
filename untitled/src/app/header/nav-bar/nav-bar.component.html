@@ -1,3 +1,13 @@
+<div class="admin-sidebar" [class.show]="sidebarVisible">
+  <h5 class="p-3">Admin Privileges</h5>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><a routerLink="/addProduct">Add Product</a></li>
+    <li class="list-group-item"><a routerLink="/dashBoard">Admin Dashboard</a></li>
+    <li class="list-group-item"><a href="#">Something else</a></li>
+    <li class="list-group-item text-danger" style="cursor:pointer;" (click)="toggleSidebar()">Close</li>
+  </ul>
+</div>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,15 +29,10 @@
 
       @if (role=="ADMIN"){
         <li class="nav-item dropdown" >
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-             role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link" (click)="toggleSidebar()">
             Admin Privileges
           </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" routerLink="/addProduct">Add product</a></li>
-            <li><a class="dropdown-item" routerLink="/dashBoard">Admin Dashboard</a></li>
-            <li><a class="dropdown-item" routerLink="#">Something else here</a></li>
-          </ul>
+
         </li>
       }
 
@@ -60,3 +65,6 @@
     </ul>
   </div>
 </nav>
+
+
+

@@ -6,6 +6,7 @@ import {DashBoardRevenueDTO} from '../../classes/dash-board-revenue-dto';
 import {CustomerDTO} from '../../classes/customer-dto';
 import {ProductDTO} from '../../classes/product-dto';
 import {MonthlyIncomeDTO} from '../../classes/monthly-income-dto';
+import {ProductRevenueDTO} from '../../classes/product-revenue-dto';
 
 @Component({
   selector: 'app-dashboard-component',
@@ -26,6 +27,8 @@ export class DashboardComponentComponent implements  OnInit{
   productListDTO!:Array<ProductDTO>;
   clothingListDTO!:Array<ProductDTO>;
   monthlyIncomeListDTO!:Array<MonthlyIncomeDTO>;
+  electronicIncomeDTO!:Array<ProductRevenueDTO>;
+  clothingIncomeDTO!:Array<ProductRevenueDTO>;
 
   // pieData = [
   //   { name: 'Electronics', value: 35000 },
@@ -48,28 +51,7 @@ export class DashboardComponentComponent implements  OnInit{
   // ];
   barData:any = []
 
-  multiSeriesData = [
-    {
-      "name": "Sales",
-      "series": [
-        { "name": "January", "value": 5000 },
-        { "name": "February", "value": 8000 },
-        { "name": "March", "value": 12000 },
-        { "name": "April", "value": 10000 },
-        { "name": "May", "value": 15000 }
-      ]
-    },
-    {
-      "name": "Orders",
-      "series": [
-        { "name": "January", "value": 120 },
-        { "name": "February", "value": 150 },
-        { "name": "March", "value": 200 },
-        { "name": "April", "value": 180 },
-        { "name": "May", "value": 240 }
-      ]
-    }
-  ];
+  multiSeriesData: any[] = [];
 
 
   colorScheme = {
@@ -87,6 +69,9 @@ export class DashboardComponentComponent implements  OnInit{
     this.getSoldProducts()
     this.getSoldClothing()
     this.getMonthLyIncome()
+    this.getMonthlyRevenues()
+
+
   }
   fetchData(){
     this.dashBoardService.getDashBoardDTO().subscribe({
@@ -186,5 +171,59 @@ export class DashboardComponentComponent implements  OnInit{
       default: return 'Unknown';
     }
   }
+
+
+
+
+
+
+
+  getMonthlyRevenues() {
+    let electronicsSeries: any[] = [];
+    let clothingSeries: any[] = [];
+
+    // Fetch Electronics
+    this.dashBoardService.getMonthlyIncomeForElectronics('Electronic').subscribe({
+      next: (data) => {
+        electronicsSeries = data.map((item: any) => ({
+          name: this.getMonthName(item.monthly_revenue),
+          value: item.totalPrice
+        }));
+        this.updateMultiSeriesData(electronicsSeries, clothingSeries); // Only updates if both are ready
+      },
+      error: (err) => console.log(err)
+    });
+
+    // Fetch Clothing
+    this.dashBoardService.getMonthlyIncomeForClothing('Clothing').subscribe({
+      next: (data) => {
+        clothingSeries = data.map((item: any) => ({
+          name: this.getMonthName(item.monthly_revenue),
+          value: item.totalPrice
+        }));
+        this.updateMultiSeriesData(electronicsSeries, clothingSeries); // Only updates if both are ready
+      },
+      error: (err) => console.log(err)
+    });
+  }
+
+  updateMultiSeriesData(electronics: any[], clothing: any[]) {
+    // Only set when both have data
+    if (electronics.length && clothing.length) {
+      this.multiSeriesData = [
+        {
+          name: 'Electronics',
+          series: electronics
+        },
+        {
+          name: 'Clothing',
+          series: clothing
+        }
+      ];
+    }
+  }
+
+
+
 
 }

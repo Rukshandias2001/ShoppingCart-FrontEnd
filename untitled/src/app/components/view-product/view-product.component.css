@@ -129,3 +129,8 @@
   background-color: #ccc;
   cursor: not-allowed;
 }
+
+.out-of-stock {
+  color: red;
+  font-weight: bold;
+}

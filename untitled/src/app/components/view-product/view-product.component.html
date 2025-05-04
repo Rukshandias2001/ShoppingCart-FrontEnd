@@ -24,9 +24,19 @@
     <img [src]="product.imageUrl"  alt="{{ product.name }}" class="product-img" />
     <h3>{{ product.name }}</h3>
     <p class="price">Rs. {{ product.price }}</p>
-    <p class="desc">Quantity : {{ product.quantity }}</p>
+    @if (product.quantity<0){
+      <p class="desc out-of-stock">Out Of Stock!</p>
+    } @else {
+      <p class="desc">Quantity : {{ product.quantity }}</p>
+    }
     <div  class="buttonList">
-      <p-button label="Add To Cart"  (onClick)="addItems(product)" />
+      <p-button
+        label="Add To Cart"
+        (onClick)="addItems(product)"
+        [disabled]="product.quantity <= 0">
+      </p-button>
+
+
       <p-button label="View Details"  (onClick)="viewProduct(product.id)" [raised]="true" severity="info" />
     </div>
   </div>
