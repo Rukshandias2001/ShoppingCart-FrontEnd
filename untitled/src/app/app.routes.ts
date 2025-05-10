@@ -10,6 +10,7 @@ import {RegistrationComponent} from './components/registration/registration.comp
 import {LoginComponent} from './components/login/login.component';
 import {authGuard} from './auth.guard';
 import {DashboardComponentComponent} from './components/dashboard-component/dashboard-component.component';
+import {UpdateProductComponent} from './components/update-product/update-product.component';
 
 export const routes: Routes = [
   {path:"addProduct",  component:AddProductComponent,canActivate: [authGuard] ,data:{role:["ADMIN"]}},
@@ -19,6 +20,7 @@ export const routes: Routes = [
   {path:"checkoutForm",component:CheckoutFormComponent,canActivate:[authGuard],data:{role:["CUSTOMER"]}},
   {path:"receipt",component:RecieptComponent,canActivate:[authGuard],data:{role:["CUSTOMER"]}},
   {path:"dashBoard",component:DashboardComponentComponent,canActivate:[authGuard],data:{role:["ADMIN"]}},
+  {path:"updateProduct",component:UpdateProductComponent,canActivate:[authGuard],data:{role:["ADMIN"]}},
   {path:"login",component:LoginComponent},
 
   {path:"",component:RegistrationComponent}

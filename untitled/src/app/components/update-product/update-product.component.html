@@ -1,0 +1,46 @@
+<div class="container mt-5">
+
+  <h2 class="mb-4 text-center text-primary">Product Management</h2>
+
+  <!-- 🔍 Search Panel -->
+  <div class="input-group mb-4">
+    <input type="text" class="form-control" placeholder="Search by product name..." [(ngModel)]="searchText" (input)="filterProducts()" />
+    <button class="btn btn-outline-secondary" type="button" (click)="clearSearch()">Clear</button>
+  </div>
+
+  <!-- 📋 Product List Table -->
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered align-middle">
+      <thead class="table-light">
+      <tr>
+        <th>#</th>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Category</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let product of filteredProducts; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td><img [src]="product.imageUrl" class="img-thumbnail" style="max-width: 60px;" /></td>
+        <td>{{ product.name }}</td>
+        <td>Rs. {{ product.price }}</td>
+        <td>{{ product.quantity }}</td>
+        @if (product.categoryId==1){
+          <td>Electronics</td>
+        } @else {
+          <td>Clothing</td>
+        }
+
+        <td>
+          <button class="btn btn-sm btn-primary" (click)="openUpdateForm(product)">Update</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
