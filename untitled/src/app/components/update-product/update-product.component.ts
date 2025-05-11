@@ -27,7 +27,8 @@ export class UpdateProductComponent implements OnInit{
   products:Array<Product> = []; // Original list from backend
   filteredProducts:Array<Product> = []; // Filtered list for search
   searchText = '';
-  selectedProduct: any = null;
+  selectedProduct!:Product;
+
 
 
 
@@ -79,16 +80,22 @@ export class UpdateProductComponent implements OnInit{
     this.selectedProduct = { ...product };
 
     const dialogRef= this.dialog.open(UpdateFormComponent, {
-      width: '100%',
-      maxWidth: '600px',
+      width: 'auto',
+      maxWidth: '700px',
+      height:'855px',
       panelClass: 'custom-dialog-container',
       autoFocus: false, // <- very important for spacing
-
+      data:this.selectedProduct
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.loadProducts()
       console.log('Dialog closed:', result);
     });
+
+
+
+
 
   }
 

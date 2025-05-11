@@ -17,8 +17,10 @@ export class NavBarComponent implements OnInit{
   profilepic:string="R";
   numberOfQuantities:number=0;
   role!:string;
+  isDropdownOpen = false;
 
   sidebarVisible = false;
+
 
   toggleSidebar() {
     this.sidebarVisible = !this.sidebarVisible;
@@ -61,6 +63,11 @@ export class NavBarComponent implements OnInit{
 
   fetchUser(){
     this.role = this.authService.getUserDetails().role
+  }
+
+  toggleDropdown(event: MouseEvent): void {
+    event.preventDefault(); // Prevent link from refreshing page
+    this.isDropdownOpen = !this.isDropdownOpen;
   }
 
 }

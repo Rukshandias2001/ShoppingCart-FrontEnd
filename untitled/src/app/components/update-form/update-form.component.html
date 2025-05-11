@@ -1,1 +1,65 @@
-<p>update-form works!</p>
+<div class="body">
+
+
+
+  @if (loading){
+    <div  class="loading-container">
+      <div class="loading-container">
+        <h1>Please wait ...</h1>
+        <mat-spinner *ngIf="loading" mode="indeterminate" color="primary"></mat-spinner>
+      </div>
+    </div>
+  } @else {
+    <div class="form-container">
+      <button (click)="closeDialog()" class="absolute top-2 right-2 text-gray-400 hover:text-black">&times;</button>
+
+      <h1>Update Products</h1>
+      <div class="form-group1">
+        <img src="{{product.imageUrl}}" alt="Product Image" class="product-image">
+      </div>
+      <form [formGroup]="productForm" (ngSubmit)="addProductData()">
+
+        <div class="form-group">
+          <label>Product Name:</label>
+          <input type="text" formControlName="productName">
+          <div *ngIf="productForm.get('productName')?.touched && productForm.get('productName')?.invalid">
+            <small class="error">Product name is required.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Quantity:</label>
+          <input type="number" formControlName="quantity">
+          <div *ngIf="productForm.get('quantity')?.touched && productForm.get('quantity')?.errors">
+            <small class="error" *ngIf="productForm.get('quantity')?.errors?.['required']">Quantity is required.</small>
+            <small class="error" *ngIf="productForm.get('quantity')?.errors?.['min']">Minimum quantity is 1.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Price:</label>
+          <input type="number" formControlName="price">
+          <div *ngIf="productForm.get('price')?.touched && productForm.get('price')?.errors">
+            <small class="error" *ngIf="productForm.get('price')?.errors?.['required']">Quantity is required.</small>
+            <small class="error" *ngIf="productForm.get('price')?.errors?.['min']">Minimum quantity is 1.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Description:</label>
+
+          <textarea id="w3review" name="w3review" rows="4" cols="75" formControlName="description"></textarea>
+          <div *ngIf="productForm.get('description')?.touched && productForm.get('description')?.invalid">
+            <small class="error">description name is required.</small>
+          </div>
+        </div>
+        <button type="submit" [disabled]="productForm.invalid">Update</button>
+      </form>
+    </div>
+  }
+
+
+
+</div>
+
+<p-toast />

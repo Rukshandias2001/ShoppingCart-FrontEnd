@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit{
     if(this.role === "CUSTOMER"){
       this.router.navigate(["/viewProduct"])
     }else{
-      this.router.navigate(["/addProduct"])
+      this.router.navigate(["/dashBoard"])
     }
 
   }

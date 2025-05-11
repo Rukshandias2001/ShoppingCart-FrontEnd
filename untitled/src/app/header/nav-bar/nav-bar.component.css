@@ -64,4 +64,10 @@
 .admin-sidebar a:hover {
   text-decoration: underline;
 }
+.dropdown-menu.show {
+  display: block;
+}
+.nav-item.dropdown.show .dropdown-menu {
+  display: block;
+}
 

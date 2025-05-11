@@ -51,5 +51,13 @@ export class ProductServiceService {
   }
 
 
+  updateProductService(product: Product): Observable<any> {
+    return this.httpclient.patch<any>(
+      `${this.baseUrl}/product/updateProduct`,
+      product,
+      { responseType: 'json' }
+    );
+  }
+
 
 }

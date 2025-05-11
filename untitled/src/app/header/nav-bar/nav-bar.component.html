@@ -48,18 +48,17 @@
         </span>
         </li>
       }
-      <li class="nav-item dropdown me-5">
+      <li class="nav-item dropdown me-5" [class.show]="isDropdownOpen">
         <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
-           data-bs-toggle="dropdown" aria-expanded="false">
-          <img
-            alt="Profile"
-            class="rounded-circle"
-            style="width: 40px; height: 40px; border-radius: 50%;"
-            [src]="profilepic">
+           (click)="toggleDropdown($event)">
+          <i class="pi pi-user" style="font-size: 1.5rem"></i>
+
         </a>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-          <li><a class="dropdown-item"  routerLink="/account">Account</a></li>
-          <li><a class="dropdown-item" (click)="logout()" >Logout</a></li>
+        <ul class="dropdown-menu dropdown-menu-end"
+            [class.show]="isDropdownOpen"
+            aria-labelledby="profileDropdown">
+          <li><a class="dropdown-item" routerLink="/account">Account</a></li>
+          <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
         </ul>
       </li>
     </ul>

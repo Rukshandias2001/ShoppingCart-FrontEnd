@@ -48,4 +48,12 @@ export class OrderServiceService {
     return  this.httpclient.post<object>(`${this.baseUrl}/user/GetReciept`,formData,{responseType: 'json'})
   }
 
+  getOrderPerUser(email:string,pageNumber:string):Observable<any>{
+    const params = {
+      email: email,
+      pageNumber: pageNumber
+    };
+    return  this.httpclient.get(`${this.baseUrl}/user/getOrdersPerUser`,{params});
+  }
+
 }
