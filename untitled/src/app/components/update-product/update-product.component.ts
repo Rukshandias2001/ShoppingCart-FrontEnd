@@ -15,6 +15,7 @@ declare var bootstrap: any;
   imports: [
     FormsModule,
     NgForOf,
+    NgClass,
 
   ],
   templateUrl: './update-product.component.html',

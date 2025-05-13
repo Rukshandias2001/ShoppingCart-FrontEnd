@@ -6,6 +6,7 @@ import {SelectedItems} from '../classes/selected-items';
 import {Country} from '../classes/country';
 import {Observable} from 'rxjs';
 import {State} from '../classes/state';
+import {Reciept} from '../classes/reciept';
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +55,10 @@ export class OrderServiceService {
       pageNumber: pageNumber
     };
     return  this.httpclient.get(`${this.baseUrl}/user/getOrdersPerUser`,{params});
+  }
+
+  getReceiptList(id:number):Observable<Array<Reciept>>{
+    return this.httpclient.get<Array<Reciept>>(`${this.baseUrl}/user/getOrderById/${id}`)
   }
 
 }

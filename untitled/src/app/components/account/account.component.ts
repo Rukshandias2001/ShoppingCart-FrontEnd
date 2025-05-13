@@ -3,6 +3,9 @@ import {DatePipe, NgForOf} from '@angular/common';
 import {Orders} from '../../classes/orders';
 import {OrderServiceService} from '../../service/order-service.service';
 import {AuthServiceService} from '../../service/auth-service.service';
+import {MatDialog} from '@angular/material/dialog';
+import {CheckoutFormComponent} from '../checkout-form/checkout-form.component';
+import {RecieptComponentComponent} from '../reciept-component/reciept-component.component';
 
 
 
@@ -18,88 +21,79 @@ import {AuthServiceService} from '../../service/auth-service.service';
 })
 export class AccountComponent implements  OnInit{
 
-  orders: Orders[] = [];
-  paginatedOrders: Orders[]  = [];
-  currentPage: number = 1;
+
+  paginatedOrders: Orders[] = [];
+  currentPage: number = 0; // Zero-based for backend
   pageSize: number = 10;
   totalPages!: number;
+  totalElements!: number;
   pageNumbers: number[] = [];
-  totalElements!:number;
 
-  constructor(public orderService:OrderServiceService,public authService:AuthServiceService) {
-  }
+  constructor(
+    public orderService: OrderServiceService,
+    public authService: AuthServiceService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
-    this.fetchOrders()
-    // Mock data - replace with actual API call
-    // @ts-ignore
-
+    this.fetchOrders(this.currentPage.toString());
   }
 
-  updatePagination(): void {
-    this.totalPages = Math.ceil(this.orders.length / this.pageSize);
-    this.pageNumbers = Array.from({ length: this.totalPages }, (_, i) => i + 1);
-    console.log(this.totalPages)
-    // @ts-ignore
-    this.paginatedOrders = this.orders.slice(
-      (this.currentPage - 1) * this.pageSize,
-      this.currentPage * this.pageSize
-    );
+  fetchOrders(pageNumber: string): void {
+    const userEmail = this.authService.getUserDetails().email;
+
+    this.orderService.getOrderPerUser(userEmail, pageNumber).subscribe({
+      next: (data) => {
+        this.paginatedOrders = data.content;
+        this.totalPages = data.totalPages;
+        this.totalElements = data.totalElements;
+        this.pageNumbers = Array.from({ length: this.totalPages }, (_, i) => i);
+      },
+      error: (err) => {
+        console.error(err);
+      },
+      complete: () => {
+        console.log("Process completed");
+      }
+    });
   }
 
   goToPage(page: number): void {
-    if (page >= 1 && page <= this.totalPages) {
+    if (page >= 0 && page < this.totalPages) {
       this.currentPage = page;
-      this.updatePagination();
+      this.fetchOrders(page.toString());
     }
   }
 
   previousPage(): void {
-    if (this.currentPage > 1) {
+    if (this.currentPage > 0) {
       this.currentPage--;
-      this.updatePagination();
+      this.fetchOrders(this.currentPage.toString());
     }
   }
 
   nextPage(): void {
-    if (this.currentPage < this.totalPages) {
+    if (this.currentPage < this.totalPages - 1) {
       this.currentPage++;
-      this.updatePagination();
+      this.fetchOrders(this.currentPage.toString());
     }
   }
 
   viewOrder(orderId: number): void {
-    // Implement view order logic (e.g., navigate to order details page)
+    const dialogRef= this.dialog.open(RecieptComponentComponent, {
+      width: '100%',
+      maxWidth: '800px',
+      panelClass: 'custom-dialog-container',
+      autoFocus: false, // <- very important for spacing
+      data:orderId
+
+    });
+
     console.log(`Viewing order ${orderId}`);
-
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog closed:', result);
+    });
   }
 
-  fetchOrders(){
-    let user = this.authService.getUserDetails().email;
-
-    this.orderService.getOrderPerUser(user,"0").subscribe({
-      next:(data)=>{
-       this.paginatedOrders =  data.content
-        this.totalPages = data.totalPages
-
-        this.totalElements = data.totalElements
-        this.getTotalElements()
-      },
-      error:(err)=>{
-        console.log(err)
-      },
-      complete:()=>{
-        console.log("Process completed")
-      }
-    })
-
-  }
-
-  getTotalElements(){
-    // @ts-ignore
-    this.orders = Array.from({ length: this.totalElements }, this.paginatedOrders);
-    this.updatePagination();
-
-  }
 
 }

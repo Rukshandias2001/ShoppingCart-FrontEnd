@@ -1,0 +1,22 @@
+<div class="receipt-container">
+  <button (click)="closeDialog()" class="absolute top-2 right-2 text-gray-400 hover:text-black">&times;</button>
+  <h2>Order Receipt</h2>
+  <p class="order-id">Order ID: #{{ orderId }}</p>
+
+  <div class="product-list">
+    <div class="product-item" *ngFor="let product of reciept">
+      <img src ="{{product.imageUrl}}" alt="{{ product.productName }}" />
+
+      <div class="details">
+        <h4>{{ product.productName }}</h4>
+        <p>Quantity: {{ product.quantity }}</p>
+
+      </div>
+    </div>
+  </div>
+
+  <hr />
+  <div class="total">
+    <strong>Total: Rs. {{ total}}</strong>
+  </div>
+</div>

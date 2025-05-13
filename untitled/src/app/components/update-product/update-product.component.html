@@ -24,11 +24,17 @@
       </thead>
       <tbody>
       <tr *ngFor="let product of filteredProducts; let i = index">
-        <td>{{ i + 1 }}</td>
+        <td>
+          <div class="form-container" [ngClass]="product.quantity === 0 ? 'zero-quantity' : ''">
+          {{ i + 1 }}
+          </div>
+        </td>
         <td><img [src]="product.imageUrl" class="img-thumbnail" style="max-width: 60px;" /></td>
         <td>{{ product.name }}</td>
         <td>Rs. {{ product.price }}</td>
-        <td>{{ product.quantity }}</td>
+        <td>
+            {{ product.quantity}}
+        </td>
         @if (product.categoryId==1){
           <td>Electronics</td>
         } @else {

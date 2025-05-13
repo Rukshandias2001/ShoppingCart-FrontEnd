@@ -39,3 +39,38 @@
   cursor: not-allowed;
   opacity: 0.6;
 }
+
+table thead th {
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+table tbody tr:hover {
+  background-color: #f3f6f9;
+}
+
+.btn-outline-primary {
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.table th, .table td {
+  font-size: 1.25rem; /* Increase text size */
+  padding: 1.5rem 2rem; /* Bigger cell spacing */
+}
+
+.btn-lg {
+  font-size: 1.1rem;
+}
+
+.custom-dialog-container .mat-dialog-container {
+  padding: 0 !important;
+  border-radius: 16px !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+

@@ -12,6 +12,7 @@ import {authGuard} from './auth.guard';
 import {DashboardComponentComponent} from './components/dashboard-component/dashboard-component.component';
 import {UpdateProductComponent} from './components/update-product/update-product.component';
 import {AccountComponent} from './components/account/account.component';
+import {HomePageComponent} from './components/home-page/home-page.component';
 
 export const routes: Routes = [
   {path:"addProduct",  component:AddProductComponent,canActivate: [authGuard] ,data:{role:["ADMIN"]}},
@@ -24,5 +25,6 @@ export const routes: Routes = [
   {path:"updateProduct",component:UpdateProductComponent,canActivate:[authGuard],data:{role:["ADMIN"]}},
   {path:"login",component:LoginComponent},
   {path:"account",component:AccountComponent},
+  {path:"homePage",component:HomePageComponent,canActivate:[authGuard],data:{role:["CUSTOMER"]}},
   {path:"",component:RegistrationComponent}
 ];
