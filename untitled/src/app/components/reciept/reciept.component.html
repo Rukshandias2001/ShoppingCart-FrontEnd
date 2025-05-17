@@ -5,7 +5,7 @@
   <div class="invoice-details">
     <p><strong>Username:</strong> {{firstName}}</p>
     <p><strong>Email:</strong> {{email}}</p>
-    <p><strong>Payment Date:</strong> {{ paidDate | date: 'yyyy/MM/dd' }}</p>
+    <p><strong>Payment Date:</strong> {{ formattedDate | date: 'yyyy/MM/dd' }}</p>
     <p><strong>Price:</strong> {{price | currency}}</p>
     <p><strong>Card Type:</strong> {{cardType}}</p>
     <h5>Purchased Items</h5>

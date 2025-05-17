@@ -173,9 +173,13 @@ export class CheckoutFormComponent implements OnInit{
 
   recieptForm() {
     const dialogRef = this.dialog.open(RecieptComponent, {
-      maxWidth: '1000px',
+      maxWidth: '1500px',
       panelClass: 'custom-dialog-container',
-      autoFocus: false
+      autoFocus: false,
+      data: {
+        price: this.price,
+        cardType: this.checkoutForm.value.cardType
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {

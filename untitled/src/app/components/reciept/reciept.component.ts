@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {OrderList} from 'primeng/orderlist';
 import {OrderedList} from '../../classes/ordered-list';
 import {Router} from '@angular/router';
 import {CurrencyPipe, DatePipe, NgForOf} from '@angular/common';
 import {AuthServiceService} from '../../service/auth-service.service';
 import {OrderServiceService} from '../../service/order-service.service';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-reciept',
@@ -23,18 +23,22 @@ export class RecieptComponent implements OnInit{
     firstName!: string;
     lastName!:string;
     email!: string;
-    paidDate!:string;
+    paidDate = new Date();
+    formattedDate = this.paidDate.toISOString().split('T')[0]; // e.g., "2025-05-17"
     price!:number ;
     cardType!:string;
 
     ngOnInit(): void {
       this.fetchUserDetails()
+      this.price = this.data.price
+      this.cardType = this.data.cardType
 
     }
     constructor(router:Router,
                 private authService:AuthServiceService,
                 private orderService:OrderServiceService,
-                public dialogRef: MatDialogRef<RecieptComponent>) {
+                public dialogRef: MatDialogRef<RecieptComponent>,
+                @Inject(MAT_DIALOG_DATA) public data: { price: number, cardType: string }) {
 
     }
 
@@ -44,8 +48,9 @@ export class RecieptComponent implements OnInit{
   }
 
   fetchUserDetails(){
+      console.log(this.authService.getUserDetails())
     this.email = this.authService.getUserDetails().email;
-    this.firstName = this.authService.getUserDetails().firstName;
+    this.firstName = this.authService.getUserDetails().sub;
     this.lastName = this.authService.getUserDetails().lastName;
     this.fetchData()
 
